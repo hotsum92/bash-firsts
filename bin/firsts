@@ -1,0 +1,23 @@
+#!/bin/bash -eu
+
+if [ $# -ne 1 ]; then
+    echo "Usage: $0 <file>"
+    exit 1
+fi
+
+cd "$1"
+
+for dir in *; do
+  if [ -d "$dir" ]; then
+    cd "$dir"
+
+    for file in *; do
+      if [ -f "$file" ]; then
+        realpath "$file"
+        break
+      fi
+    done
+
+    cd ..
+  fi
+done
